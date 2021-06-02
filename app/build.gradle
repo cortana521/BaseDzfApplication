@@ -1,0 +1,108 @@
+plugins {
+    id 'com.android.application'
+    id 'org.greenrobot.greendao'
+    id 'com.alibaba.arouter'
+//    id 'com.jakewharton.butterknife'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME : project.getName()]
+            }
+        }
+    }
+
+    greendao {
+        schemaVersion 1 //数据库版本号
+
+        daoPackage 'com.example.dzfbase.greendao' //例如 包名.greendao
+
+        targetGenDir 'src/main/java'
+
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        //最大堆内存
+        javaMaxHeapSize = "8g"
+        //是否支持大工程模式
+        jumboMode = true
+        //预编译
+        preDexLibraries = false
+        //线程数
+        threadCount = 8
+    }
+}
+
+dependencies {
+
+//    implementation 'androidx.appcompat:appcompat:1.2.0'
+//    implementation 'com.google.android.material:material:1.2.1'
+//    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+//    testImplementation 'junit:junit:4.+'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    api fileTree(include: ['*.jar'], dir: 'libs')
+
+    api rootProject.ext.support["material"]
+    api rootProject.ext.support["recyclerview"]
+    api rootProject.ext.support["material"]
+    testImplementation rootProject.ext.support["junit-test"]
+    androidTestImplementation rootProject.ext.support["junit"]
+    api rootProject.ext.dependencies["rxlifecycle-components"]
+    api rootProject.ext.dependencies["constraintlayout"]
+    api rootProject.ext.dependencies["eventbus"]
+    api rootProject.ext.dependencies["okhttp"]
+    //阿里路由框架
+    api rootProject.ext.dependencies["arouter-api"]
+    //组件中依赖阿里路由编译框架
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+    api rootProject.ext.dependencies["androidx"]
+    api rootProject.ext.dependencies["rxlifecycle"]
+    api rootProject.ext.dependencies["rxlifecycle-components"]
+    api rootProject.ext.dependencies["rxjava"]
+    api rootProject.ext.dependencies["rxandroid"]
+    api rootProject.ext.dependencies["rxlifecycle"]
+    api rootProject.ext.dependencies["okhttp"]
+    api rootProject.ext.dependencies["retrofit"]
+    api rootProject.ext.dependencies["retrofit-cookie"]
+    api rootProject.ext.dependencies["logging-interceptor"]
+    api rootProject.ext.dependencies["fastjson"]
+    api rootProject.ext.dependencies["gson"]
+    api rootProject.ext.dependencies["adapter-rxjava"]
+    api rootProject.ext.dependencies["converter-gson"]
+    api rootProject.ext.dependencies["utilcodex"]
+    api rootProject.ext.dependencies["greendao"]
+    api rootProject.ext.dependencies["eventbus"]
+//    api rootProject.ext.dependencies["butterknife"]
+//    annotationProcessor  rootProject.ext.dependencies["butterknife-compiler"]
+}
